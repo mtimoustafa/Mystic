@@ -2,24 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RuneController : MonoBehaviour {
+public class Rune : MonoBehaviour {
   public enum RuneType { Fire, Water, Earth, Wind, Light, Dark, Poison, Void, Spirit };
   public RuneType runeType = RuneType.Fire;
   public string keyBinding = "a";
   public bool isSelected = false;
 
-  SpriteRenderer spriteRenderer;
+  SpriteRenderer runeRenderer;
 
   // Use this for initialization
   void Start () {
-    spriteRenderer = GetComponent<SpriteRenderer>();
+    runeRenderer = GetComponent<SpriteRenderer>();
   }
 
   // Update is called once per frame
   void Update () {
     if (Input.GetKeyDown(keyBinding)) {
       isSelected = !isSelected;
-      spriteRenderer.color = ToggleColor(isSelected);
+      runeRenderer.color = ToggleColor(isSelected);
     }
   }
 

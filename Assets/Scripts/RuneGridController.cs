@@ -12,8 +12,10 @@ public class RuneGridController : MonoBehaviour {
     for (int y = 0; y < 3; y++) {
       for (int x = 0; x < 3; x++) {
         runes.Add(Instantiate(runePrefab, new Vector3(x-1, 1-y, 0f), Quaternion.identity) as GameObject);
-        runes[runes.Count-1].GetComponent<RuneController>().runeType = (RuneController.RuneType)(y*3 + x);
-        runes[runes.Count-1].GetComponent<RuneController>().keyBinding = keyBinds[y*3 + x];
+        Rune rune = runes[runes.Count-1].GetComponent<Rune>();
+
+        rune.runeType = (Rune.RuneType)(y*3 + x);
+        rune.keyBinding = keyBinds[y*3 + x];
       }
     }
   }
