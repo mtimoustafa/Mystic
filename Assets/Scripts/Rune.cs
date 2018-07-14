@@ -10,16 +10,28 @@ public class Rune : MonoBehaviour {
 
   SpriteRenderer runeRenderer;
 
-  // Use this for initialization
+  public void ActivateRune() {
+    isSelected = true;
+    runeRenderer.color = ToggleColor(isSelected);
+  }
+
+  public void ClearRune() {
+    isSelected = false;
+    runeRenderer.color = ToggleColor(isSelected);
+  }
+
+  public void ToggleRune() {
+    isSelected = !isSelected;
+    runeRenderer.color = ToggleColor(isSelected);
+  }
+
   void Start () {
     runeRenderer = GetComponent<SpriteRenderer>();
   }
 
-  // Update is called once per frame
   void Update () {
     if (Input.GetKeyDown(keyBinding)) {
-      isSelected = !isSelected;
-      runeRenderer.color = ToggleColor(isSelected);
+      ToggleRune();
     }
   }
 
