@@ -3,14 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GameController : MonoBehaviour {
-  public RuneGridController runeGridController;
-
-  // Use this for initialization
   void Start () {
-    runeGridController.SetupGrid();
-  }
-
-  // Update is called once per frame
-  void Update () {
+    GameObject.FindGameObjectsWithTag("RuneGrid")[0].GetComponent<RuneGrid>().SetupGrid();
   }
 }

@@ -4,8 +4,8 @@ using System.Linq;
 using UnityEngine;
 using RuneType = Rune.RuneType;
 
-public class ComboLibrary : MonoBehaviour {
-  public List<string> validCombos;
+public class SpellLibrary : MonoBehaviour {
+  List<Spell> spells;
 
   public void Start () {
     InitializeComboList();
@@ -20,12 +20,10 @@ public class ComboLibrary : MonoBehaviour {
   }
 
   public bool IsValidCombo(params RuneType[] runes) {
-    return validCombos.Contains(Combofy(runes));
+    return spells.Where(s => Combofy(s.runeCombo.ToArray()) == Combofy(runes)).Count() > 0;
   }
 
   void InitializeComboList() {
-    validCombos = new List<string> {
-      Combofy(RuneType.Fire, RuneType.Wind)
-    };
+    spells = GameObject.FindGameObjectsWithTag("Spell").Select(go => go.GetComponent<Spell>()).ToList();
   }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class RuneGridController : MonoBehaviour {
+public class RuneGrid : MonoBehaviour {
   public GameObject runePrefab;
   public List<GameObject> runes;
 
@@ -14,7 +14,7 @@ public class RuneGridController : MonoBehaviour {
 
     for (int y = 0; y < 3; y++) {
       for (int x = 0; x < 3; x++) {
-        runes.Add(Instantiate(runePrefab, new Vector3(x-1, 1-y, 0f), Quaternion.identity) as GameObject);
+        runes.Add(Instantiate(runePrefab, new Vector3(transform.position.x + x-1, transform.position.y + 1-y, 0f), Quaternion.identity) as GameObject);
         Rune rune = runes[runes.Count-1].GetComponent<Rune>();
 
         rune.runeType = (Rune.RuneType)(y*3 + x);
@@ -35,7 +35,7 @@ public class RuneGridController : MonoBehaviour {
 
   void TriggerEnteredCombo() {
     GameObject gameController = GameObject.FindGameObjectsWithTag("GameController")[0];
-    ComboLibrary comboLibrary = gameController.GetComponent(typeof(ComboLibrary)) as ComboLibrary;
+    SpellLibrary comboLibrary = gameController.GetComponent(typeof(SpellLibrary)) as SpellLibrary;
 
     List<GameObject> enabledRunes = runes.Where(r => r.GetComponent<Rune>().isSelected).ToList();
     if (comboLibrary.IsValidCombo(enabledRunes.Select(r => r.GetComponent<Rune>().runeType).ToArray())) {

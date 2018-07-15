@@ -4,9 +4,9 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - RuneType1
-  - RuneType2
-  - RuneType3
+  - SpellLibrary
+  - Spell
+  - RuneGrid
   layers:
   - Default
   - TransparentFX
