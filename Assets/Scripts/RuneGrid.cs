@@ -6,6 +6,8 @@ using UnityEngine;
 public class RuneGrid : MonoBehaviour {
   public GameObject runePrefab;
   public string[] keyBinds = { "q", "w", "e", "a", "s", "d", "z", "x", "c" };
+  public string fireKeybind = "f";
+  public string owner = "";
 
   List<GameObject> runes;
 
@@ -35,7 +37,7 @@ public class RuneGrid : MonoBehaviour {
   }
 
   void Update() {
-    if (Input.GetKeyDown("space")) {
+    if (Input.GetKeyDown(fireKeybind)) {
       TriggerEnteredCombo();
     }
   }
@@ -48,7 +50,7 @@ public class RuneGrid : MonoBehaviour {
     if (spell == null) {
       Debug.Log("Failed combo");
     } else {
-      GameObject.Find("Player Spell Spawner").GetComponent<SpellSpawner>().SpawnSpell(spell, "player");
+      GameObject.Find(owner + " Spell Spawner").GetComponent<SpellSpawner>().SpawnSpell(spell, owner);
     }
 
     ClearRunes();
