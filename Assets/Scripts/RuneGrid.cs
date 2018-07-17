@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class RuneGrid : MonoBehaviour {
   public GameObject runePrefab;
-  public List<GameObject> runes;
+  public string[] keyBinds = { "q", "w", "e", "a", "s", "d", "z", "x", "c" };
 
-  string[] keyBinds = { "q", "w", "e", "a", "s", "d", "z", "x", "c" };
+  List<GameObject> runes;
 
   public void SetupGrid() {
     runes = new List<GameObject>();
@@ -15,6 +15,7 @@ public class RuneGrid : MonoBehaviour {
     for (int y = 0; y < 3; y++) {
       for (int x = 0; x < 3; x++) {
         runes.Add(Instantiate(runePrefab, new Vector3(transform.position.x + x-1, transform.position.y + 1-y, 0f), Quaternion.identity) as GameObject);
+        runes[runes.Count-1].transform.parent = gameObject.transform;
         Rune rune = runes[runes.Count-1].GetComponent<Rune>();
 
         rune.runeType = (Rune.RuneType)(y*3 + x);
@@ -27,6 +28,12 @@ public class RuneGrid : MonoBehaviour {
     foreach (GameObject rune in runes) { rune.GetComponent<Rune>().ClearRune(); }
   }
 
+  void Start() {
+    // Sprite is only to help us see grid position in the editor, so disable it in runtime
+    gameObject.GetComponent<SpriteRenderer>().enabled = false;
+    SetupGrid();
+  }
+
   void Update() {
     if (Input.GetKeyDown("space")) {
       TriggerEnteredCombo();
@@ -34,14 +41,14 @@ public class RuneGrid : MonoBehaviour {
   }
 
   void TriggerEnteredCombo() {
-    GameObject gameController = GameObject.FindGameObjectsWithTag("GameController")[0];
-    SpellLibrary comboLibrary = gameController.GetComponent(typeof(SpellLibrary)) as SpellLibrary;
-
+    SpellLibrary spellLibrary = GameObject.FindGameObjectsWithTag("SpellLibrary")[0].GetComponent<SpellLibrary>();
     List<GameObject> enabledRunes = runes.Where(r => r.GetComponent<Rune>().isSelected).ToList();
-    if (comboLibrary.IsValidCombo(enabledRunes.Select(r => r.GetComponent<Rune>().runeType).ToArray())) {
-      Debug.Log("Successful combo!");
+    Spell spell = spellLibrary.FindSpellByCombo(enabledRunes.Select(r => r.GetComponent<Rune>().runeType).ToArray());
+
+    if (spell == null) {
+      Debug.Log("Failed combo");
     } else {
-      Debug.Log("Failed combo.");
+      GameObject.Find("Player Spell Spawner").GetComponent<SpellSpawner>().SpawnSpell(spell, "player");
     }
 
     ClearRunes();

@@ -5,13 +5,14 @@ using UnityEngine;
 using RuneType = Rune.RuneType;
 
 public class SpellLibrary : MonoBehaviour {
+  [HideInInspector]
   List<Spell> spells;
 
   public void Start () {
-    InitializeComboList();
+    spells = GameObject.FindGameObjectsWithTag("Spell").Select(go => go.GetComponent<Spell>()).ToList();
   }
 
-  public string Combofy(params RuneType[] runes) {
+  public static string Combofy(params RuneType[] runes) {
     string combo = "";
     foreach (RuneType rune in runes) {
       combo += rune.ToString() + '.';
@@ -19,11 +20,13 @@ public class SpellLibrary : MonoBehaviour {
     return combo;
   }
 
-  public bool IsValidCombo(params RuneType[] runes) {
-    return spells.Where(s => Combofy(s.runeCombo.ToArray()) == Combofy(runes)).Count() > 0;
+  public static string Combofy(List<RuneType> runes) {
+    return Combofy(runes.ToArray());
   }
 
-  void InitializeComboList() {
-    spells = GameObject.FindGameObjectsWithTag("Spell").Select(go => go.GetComponent<Spell>()).ToList();
+  public Spell FindSpellByCombo(params RuneType[] runes) {
+    List<Spell> results = spells.Where(s => Combofy(s.runeCombo.ToArray()) == Combofy(runes)).ToList();
+    if (results.Count() > 0) { return results.First(); }
+    else { return null; }
   }
 }

@@ -8,4 +8,8 @@ public class Spell : MonoBehaviour {
   public float deltaHP = 0f;
   public float manaCost = 0f;
   public float travelSpeed = 2f;
+  public bool isSingleton = false;
+
+  [HideInInspector]
+  public string belongsTo = "";
 }
