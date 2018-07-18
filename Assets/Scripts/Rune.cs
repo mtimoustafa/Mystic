@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Rune : MonoBehaviour {
-  public enum RuneType { Fire, Water, Earth, Wind, Light, Dark, Poison, Void, Spirit };
+  public enum RuneType { Fire, Water, Earth, Air, Light, Dark, Poison, Void, Spirit };
   public RuneType runeType = RuneType.Fire;
   public string keyBinding = "a";
   public bool isSelected = false;
@@ -45,7 +45,7 @@ public class Rune : MonoBehaviour {
         return Color.blue;
       case RuneType.Earth:
         return Color.green;
-      case RuneType.Wind:
+      case RuneType.Air:
         return Color.cyan;
       case RuneType.Light:
         return Color.white;

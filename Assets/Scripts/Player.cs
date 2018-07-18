@@ -49,9 +49,13 @@ public class Player : MonoBehaviour {
 
   void OnTriggerEnter2D(Collider2D collider) {
     if (collider.gameObject.tag == "Spell") {
-      HP += collider.gameObject.GetComponent<Spell>().deltaHP;
+      ApplySpellEffects(collider.gameObject.GetComponent<Spell>());
       Destroy(collider.gameObject);
     }
+  }
+
+  public void ApplySpellEffects(Spell spell) {
+    HP += spell.deltaHP;
   }
 
   void UpdateDisplays() {

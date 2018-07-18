@@ -7,7 +7,7 @@ public class RuneGrid : MonoBehaviour {
   public GameObject runePrefab;
   public string[] keyBinds = { "q", "w", "e", "a", "s", "d", "z", "x", "c" };
   public string fireKeybind = "f";
-  public string owner = "";
+  public GameObject owner;
 
   List<GameObject> runes;
 
@@ -50,7 +50,7 @@ public class RuneGrid : MonoBehaviour {
     if (spell == null) {
       Debug.Log("Failed combo");
     } else {
-      GameObject.Find(owner + " Spell Spawner").GetComponent<SpellSpawner>().SpawnSpell(spell, owner);
+      owner.transform.GetChild(0).GetComponent<SpellSpawner>().SpawnSpell(spell);
     }
 
     ClearRunes();

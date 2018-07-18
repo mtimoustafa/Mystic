@@ -9,22 +9,26 @@ public class Spell : MonoBehaviour {
   public float manaCost = 0f;
   public float travelSpeed = 2f;
   public float duration = 0f;
+  public float chargeTime = 0f;
   public bool isSingleton = false;
+  public bool instantaneous = false;
   public bool isWard = false;
-
-  [HideInInspector]
-  public string belongsTo = "";
-
-  float timeAlive = 0f;
+  public Player owner;
 
   void Start() {
-    if (duration > 0f && (transform.parent == null || transform.parent.gameObject.tag != "SpellLibrary")) {
+    // Don't mess spell library spells as the spell library is a factory
+    if (transform.parent != null && transform.parent.gameObject.tag == "SpellLibrary") {
+      return;
+    }
+
+    if (instantaneous) {
+      owner.ApplySpellEffects(this);
+      Destroy(gameObject);
+    }
+
+    if (duration > 0f) {
       StartCoroutine("DestroyAfterDuration");
     }
-  }
-
-  void Update() {
-    timeAlive += Time.deltaTime;
   }
 
   void OnTriggerEnter2D(Collider2D collider) {
@@ -39,9 +43,14 @@ public class Spell : MonoBehaviour {
   }
 
   IEnumerator DestroyAfterDuration() {
-    while (timeAlive < duration) {
+    float durationElapsed = 0f;
+    yield return null;
+
+    while (durationElapsed < duration) {
+      durationElapsed += Time.deltaTime;
       yield return null;
     }
+    
     Destroy(gameObject);
   }
 }
