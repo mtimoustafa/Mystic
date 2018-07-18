@@ -100,9 +100,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   runeCombo: 0000000003000000
-  deltaHP: -4
+  deltaHP: -2
   manaCost: 2
-  travelSpeed: 7
+  travelSpeed: 10
   duration: 0
   isSingleton: 0
   isWard: 0

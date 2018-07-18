@@ -1,24 +1,33 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour {
   public float maxHP = 10f;
   public float maxMana = 10f;
   public float manaRegenCooldown = 1f;
   public float manaRegenPerSecond = 2f;
+  public Slider HPDisplay;
+  public Slider manaDisplay;
 
   // TODO: make these readonly in inspector
   public float HP;
   public float mana;
-  
-  float manaCooldownCurrent;
+
+  [HideInInspector]
+  public float manaCooldownCurrent;
 
   void Start () {
     HP = maxHP;
     mana = maxMana;
 
     manaCooldownCurrent = 0f;
+
+    HPDisplay.maxValue = maxHP;
+    HPDisplay.value = HP;
+    manaDisplay.maxValue = maxMana;
+    manaDisplay.value = mana;
   }
 
   void Update () {
@@ -34,6 +43,8 @@ public class Player : MonoBehaviour {
 
     if (HP > maxHP) { HP = maxHP; }
     if (mana > maxMana) { mana = maxMana; }
+
+    UpdateDisplays();
   }
 
   void OnTriggerEnter2D(Collider2D collider) {
@@ -41,5 +52,10 @@ public class Player : MonoBehaviour {
       HP += collider.gameObject.GetComponent<Spell>().deltaHP;
       Destroy(collider.gameObject);
     }
+  }
+
+  void UpdateDisplays() {
+    HPDisplay.value = HP;
+    manaDisplay.value = mana;
   }
 }
