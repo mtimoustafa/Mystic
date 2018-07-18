@@ -100,11 +100,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   runeCombo: 0000000003000000
-  deltaHP: -2
-  manaCost: 0
-  travelSpeed: 5
+  deltaHP: -4
+  manaCost: 2
+  travelSpeed: 7
   duration: 0
   isSingleton: 0
+  isWard: 0
   belongsTo: 
 --- !u!212 &212968271990456300
 SpriteRenderer:

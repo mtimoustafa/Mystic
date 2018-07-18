@@ -9,6 +9,15 @@ public class SpellSpawner : MonoBehaviour {
   public SpellDirection spellDirectionX = SpellDirection.Right;
 
   public void SpawnSpell(Spell spell, string owner) {
+    Player player = GameObject.Find(owner).GetComponent<Player>();
+    if (player.mana < spell.manaCost) {
+      Debug.Log(owner + " doesn't have enough mana for " + spell.name);
+      return;
+    } else {
+      player.mana -= spell.manaCost;
+      player.manaCooldownCurrent = player.manaRegenCooldown;
+    }
+
     List<GameObject> illegalCopies = GameObject.FindGameObjectsWithTag("Spell").Where(s =>
       SpellLibrary.Combofy(s.GetComponent<Spell>().runeCombo) == SpellLibrary.Combofy(spell.runeCombo) &&
       s.GetComponent<Spell>().isSingleton &&
