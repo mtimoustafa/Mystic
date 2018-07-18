@@ -25,11 +25,11 @@ public class Rune : MonoBehaviour {
     runeRenderer.color = ToggleColor(isSelected);
   }
 
-  void Start () {
+  void Start() {
     runeRenderer = GetComponent<SpriteRenderer>();
   }
 
-  void Update () {
+  void Update() {
     if (Input.GetKeyDown(keyBinding)) {
       ToggleRune();
     }

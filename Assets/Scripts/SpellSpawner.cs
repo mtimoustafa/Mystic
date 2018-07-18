@@ -20,6 +20,7 @@ public class SpellSpawner : MonoBehaviour {
 
     GameObject spellInstance = Instantiate(spell.gameObject, gameObject.transform.position, gameObject.transform.rotation);
     spellInstance.GetComponent<SpriteRenderer>().enabled = true;
+    spellInstance.GetComponent<BoxCollider2D>().enabled = true;
     spellInstance.GetComponent<Rigidbody2D>().velocity = new Vector2(spell.travelSpeed * (int)spellDirectionX, 0f);
     spellInstance.GetComponent<Spell>().belongsTo = owner;
   }
