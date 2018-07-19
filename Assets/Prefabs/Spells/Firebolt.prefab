@@ -104,9 +104,11 @@ MonoBehaviour:
   manaCost: 2
   travelSpeed: 10
   duration: 0
+  chargeTime: 0
   isSingleton: 0
+  instantaneous: 0
   isWard: 0
-  belongsTo: 
+  owner: {fileID: 0}
 --- !u!212 &212968271990456300
 SpriteRenderer:
   m_ObjectHideFlags: 1

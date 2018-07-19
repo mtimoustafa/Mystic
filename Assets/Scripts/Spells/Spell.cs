@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using RuneType = Rune.RuneType;
+using SpellDirection = SpellSpawner.SpellDirection;
 
 public class Spell : MonoBehaviour {
   public List<RuneType> runeCombo = new List<RuneType>();
@@ -11,17 +12,18 @@ public class Spell : MonoBehaviour {
   public float duration = 0f;
   public float chargeTime = 0f;
   public bool isSingleton = false;
-  public bool instantaneous = false;
+  public bool instantlyApplied = false;
   public bool isWard = false;
   public Player owner;
 
-  void Start() {
-    // Don't mess spell library spells as the spell library is a factory
-    if (transform.parent != null && transform.parent.gameObject.tag == "SpellLibrary") {
-      return;
-    }
+  [HideInInspector]
+  public SpellDirection spellDirection;
 
-    if (instantaneous) {
+  void Start() {
+    // Don't mess with spell library spells as the spell library is a factory
+    if (IsLibrarySpell()) { return; }
+
+    if (instantlyApplied) {
       owner.ApplySpellEffects(this);
       Destroy(gameObject);
     }
@@ -29,6 +31,16 @@ public class Spell : MonoBehaviour {
     if (duration > 0f) {
       StartCoroutine("DestroyAfterDuration");
     }
+
+    if (GetComponent<SpriteRenderer>() != null) { GetComponent<SpriteRenderer>().enabled = true; }
+    if (GetComponent<BoxCollider2D>() != null) { GetComponent<BoxCollider2D>().enabled = true; }
+    if (GetComponent<Rigidbody2D>() != null) {
+      GetComponent<Rigidbody2D>().velocity = new Vector2(travelSpeed * (float)spellDirection, 0f);
+    }
+  }
+
+  protected bool IsLibrarySpell() {
+    return (transform.parent != null && transform.parent.gameObject.tag == "SpellLibrary");
   }
 
   void OnTriggerEnter2D(Collider2D collider) {
@@ -50,7 +62,7 @@ public class Spell : MonoBehaviour {
       durationElapsed += Time.deltaTime;
       yield return null;
     }
-    
+
     Destroy(gameObject);
   }
 }

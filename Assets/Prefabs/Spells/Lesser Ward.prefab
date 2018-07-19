@@ -36,7 +36,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1901974972069788}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.5, y: 1.8, z: 1}
   m_Children: []
@@ -50,7 +50,7 @@ Rigidbody2D:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1901974972069788}
-  m_BodyType: 0
+  m_BodyType: 2
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -102,12 +102,13 @@ MonoBehaviour:
   runeCombo: 0400000007000000
   deltaHP: 0
   manaCost: 1
-  damage: 0
   travelSpeed: 0
   duration: 2
+  chargeTime: 0
   isSingleton: 1
+  instantaneous: 0
   isWard: 1
-  belongsTo: 
+  owner: {fileID: 0}
 --- !u!212 &212879050145847108
 SpriteRenderer:
   m_ObjectHideFlags: 1

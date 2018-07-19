@@ -17,7 +17,7 @@ public class SpellSpawner : MonoBehaviour {
   public void SpawnSpell(Spell spell) {
     Player player = owner.GetComponent<Player>();
     if (player.mana < spell.manaCost) {
-      Debug.Log(owner + " doesn't have enough mana for " + spell.name);
+      Debug.Log(owner.name + " doesn't have enough mana for " + spell.name);
       return;
     } else {
       player.mana -= spell.manaCost;
@@ -42,10 +42,8 @@ public class SpellSpawner : MonoBehaviour {
 
   void InstantiateSpell(Spell spell) {
     GameObject spellInstance = Instantiate(spell.gameObject, gameObject.transform.position, gameObject.transform.rotation);
-    spellInstance.GetComponent<SpriteRenderer>().enabled = true;
-    spellInstance.GetComponent<BoxCollider2D>().enabled = true;
-    spellInstance.GetComponent<Rigidbody2D>().velocity = new Vector2(spell.travelSpeed * (int)spellDirectionX, 0f);
     spellInstance.GetComponent<Spell>().owner = owner.GetComponent<Player>();
+    spellInstance.GetComponent<Spell>().spellDirection = spellDirectionX;
   }
 
   IEnumerator InstantiateSpellAfterChargeTime(Spell spell) {
