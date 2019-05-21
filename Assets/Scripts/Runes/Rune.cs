@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Rune : MonoBehaviour {
   public enum RuneType { Fire, Water, Earth, Air, Light, Dark, Poison, Void, Spirit };
@@ -8,25 +9,25 @@ public class Rune : MonoBehaviour {
   public string keyBinding = "a";
   public bool isSelected = false;
 
-  SpriteRenderer runeRenderer;
+  Image image;
 
   public void ActivateRune() {
     isSelected = true;
-    runeRenderer.color = ToggleColor(isSelected);
+    image.color = ToggleColor(isSelected);
   }
 
   public void ClearRune() {
     isSelected = false;
-    runeRenderer.color = ToggleColor(isSelected);
+    image.color = ToggleColor(isSelected);
   }
 
   public void ToggleRune() {
     isSelected = !isSelected;
-    runeRenderer.color = ToggleColor(isSelected);
+    image.color = ToggleColor(isSelected);
   }
 
   void Start() {
-    runeRenderer = GetComponent<SpriteRenderer>();
+    image = GetComponent<Image>();
   }
 
   void Update() {

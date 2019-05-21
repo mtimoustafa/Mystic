@@ -10,18 +10,25 @@ public class RuneGrid : MonoBehaviour {
   public GameObject owner;
 
   List<GameObject> runes;
+  Vector2 _gridSize;
 
   public void SetupGrid() {
     runes = new List<GameObject>();
 
     for (int y = 0; y < 3; y++) {
       for (int x = 0; x < 3; x++) {
-        runes.Add(Instantiate(runePrefab, new Vector3(transform.position.x + x-1, transform.position.y + 1-y, 0f), Quaternion.identity) as GameObject);
-        runes[runes.Count-1].transform.parent = gameObject.transform;
-        Rune rune = runes[runes.Count-1].GetComponent<Rune>();
+        float xPos = (x - 1) * _gridSize.x / 3;
+        float yPos = (1 - y) * _gridSize.y / 3;
 
-        rune.runeType = (Rune.RuneType)(y*3 + x);
-        rune.keyBinding = keyBinds[y*3 + x];
+        GameObject newRuneObject = Instantiate(runePrefab, gameObject.transform) as GameObject;
+
+        newRuneObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(xPos, yPos);
+
+        Rune newRune = newRuneObject.GetComponent<Rune>();
+        newRune.runeType = (Rune.RuneType)(y*3 + x);
+        newRune.keyBinding = keyBinds[y*3 + x];
+
+        runes.Add(newRuneObject);
       }
     }
   }
@@ -31,8 +38,7 @@ public class RuneGrid : MonoBehaviour {
   }
 
   void Start() {
-    // Sprite is only to help us see grid position in the editor, so disable it in runtime
-    gameObject.GetComponent<SpriteRenderer>().enabled = false;
+    _gridSize = gameObject.GetComponent<RectTransform>().sizeDelta;
     SetupGrid();
   }
 
