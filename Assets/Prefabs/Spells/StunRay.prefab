@@ -10,9 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4249658675861296}
   - component: {fileID: 114525953914709018}
+  - component: {fileID: 5566758475379872136}
   - component: {fileID: 212885391966480336}
   m_Layer: 0
-  m_Name: Thunderbolt
+  m_Name: StunRay
   m_TagString: Spell
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,9 +45,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6095780a5810dc04790559f71d97788e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runeCombo: 000000000200000003000000
-  deltaHP: -3
-  manaCost: 3
+  runeCombo: 020000000600000007000000
+  deltaHP: 0
+  manaCost: 5
   travelSpeed: 90
   duration: 0
   chargeTime: 1
@@ -57,6 +58,22 @@ MonoBehaviour:
   spellDirection: 0
   rayDuration: 0.5
   rayMaxLength: 20
+--- !u!114 &5566758475379872136
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1337788754341102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82cc87621a7535b49b6f7824e5e6ee20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  duration: 3
+  disableVerbal: 1
+  disableSomatic: 0
+  disableMaterial: 0
 --- !u!212 &212885391966480336
 SpriteRenderer:
   m_ObjectHideFlags: 0

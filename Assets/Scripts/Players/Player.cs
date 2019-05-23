@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,12 +10,10 @@ public class Player : MonoBehaviour {
   public float maxMana = 10f;
   public float manaRegenCooldown = 1f;
   public float manaRegenPerSecond = 2f;
-  public Slider HPDisplay;
-  public Slider manaDisplay;
-
-  // TODO: make these readonly in inspector
   public float HP;
   public float mana;
+  public Slider HPDisplay;
+  public Slider manaDisplay;
 
   [HideInInspector]
   public float manaCooldownCurrent;
@@ -56,6 +56,13 @@ public class Player : MonoBehaviour {
 
   public void ApplySpellEffects(Spell spell) {
     HP += spell.deltaHP;
+
+    Action<SpellCondition> addCondition = new Action<SpellCondition>(AddCondition);
+    Array.ForEach(spell.gameObject.GetComponents<SpellCondition>(), addCondition);
+  }
+
+  void AddCondition(SpellCondition condition) {
+    gameObject.GetComponent<PlayerCondition>().AddCondition(condition);
   }
 
   void UpdateDisplays() {
